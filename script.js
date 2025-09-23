@@ -186,6 +186,7 @@ let tasks = [
   },
   // Add more tasks for each category as desired
 ];
+
 // Define functions
 const saveLocal = () => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -202,8 +203,10 @@ const toggleScreen = () => {
 const updateTotals = () => {
   const categoryTasks = tasks.filter(
     (task) =>
+      selectedCategory &&
       task.category.toLowerCase() === selectedCategory.title.toLowerCase()
   );
+  // Ensure safety if selectedCategory is not yet set
   numTasks.innerHTML = `${categoryTasks.length} Tasks`;
   totalTasks.innerHTML = tasks.length;
 };
@@ -233,7 +236,7 @@ const renderCategories = () => {
               </div>
               <div class="options">
                 <div class="toggle-btn">
-                  <svg>
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -255,6 +258,10 @@ const renderCategories = () => {
 };
 const renderTasks = () => {
   tasksContainer.innerHTML = "";
+  if (!selectedCategory) {
+    // If no category selected yet, default to first
+    selectedCategory = categories[0];
+  }
   const categoryTasks = tasks.filter(
     (task) =>
       task.category.toLowerCase() === selectedCategory.title.toLowerCase()
@@ -276,10 +283,13 @@ const renderTasks = () => {
         const index = tasks.findIndex((t) => t.id === task.id);
         tasks[index].completed = !tasks[index].completed;
         saveLocal();
+        // Keep UI consistent after toggle
+        updateTotals();
+        renderCategories();
       });
       div.innerHTML = `
       <div class="delete">
-                <svg>
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -297,7 +307,7 @@ const renderTasks = () => {
               `;
       label.innerHTML = `
               <span class="checkmark">
-                <svg>
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -336,24 +346,31 @@ const toggleAddTaskForm = () => {
 };
 const addTask = (e) => {
   e.preventDefault();
-  const task = taskInput.value;
+  const task = taskInput.value.trim();
   const category = categorySelect.value;
   if (task === "") {
     alert("Please enter a task");
   } else {
     const newTask = {
-      id: tasks.length + 1,
+      id: tasks.length ? Math.max(...tasks.map((t) => t.id)) + 1 : 1, // ensure unique id
       task,
       category,
       completed: false,
     };
-    taskInput.value = "";
     tasks.push(newTask);
     saveLocal();
-    toggleAddTaskForm();
+
+    // UI updates: re-render lists and totals
     renderTasks();
     renderCategories();
     updateTotals();
+
+    // Clear inputs and close form
+    taskInput.value = "";
+    categorySelect.selectedIndex = 0;
+    if (addTaskWrapper.classList.contains("active")) {
+      toggleAddTaskForm();
+    }
   }
 };
 // Initialize variables and DOM elements
@@ -385,9 +402,29 @@ cancelBtn.addEventListener("click", toggleAddTaskForm);
 getLocal();
 renderTasks();
 renderCategories();
+updateTotals();
+
+// Ensure categorySelect is populated and not skipped
+categorySelect.innerHTML = ""; // reset to avoid duplicates on hot reload
 categories.forEach((category) => {
   const option = document.createElement("option");
-  option.value = category.title.toLowerCase();
+  option.value = category.title; // use consistent case for value
   option.textContent = category.title;
   categorySelect.appendChild(option);
 });
+
+// If a category was previously selected, keep UI in sync
+if (selectedCategory) {
+  categoryTitle.innerHTML = selectedCategory.title;
+  categoryImg.src = `${selectedCategory.img}`;
+}
+
+/*
+Fixes applied:
+1) Task count updates correctly after add/delete via updateTotals() calls after mutations.
+2) renderTasks() and renderCategories() are called after every change (add, delete, toggle complete).
+3) UI input fields are cleared and the add form closes after add; categorySelect reset to first option.
+4) Category render is not skipped: renderCategories() invoked on init and after mutations; categorySelect populated safely without duplicates.
+5) Unique ID generation fixed to avoid duplicates after deletions.
+6) Defensive checks for selectedCategory and added initial updateTotals() call on init.
+*/
