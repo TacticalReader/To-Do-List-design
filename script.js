@@ -225,15 +225,15 @@ const renderCategories = () => {
     });
     div.innerHTML = `
                   <div class="left">
-                <img src="${category.img}" alt="${category.title}" />
+                <img alt="${category.title}"/>
                 <div class="content">
-                  <h1>${category.title}</h1>
-                  <p>${categoryTasks.length} Tasks</p>
+                  ${category.title}
+                  ${categoryTasks.length} Tasks
                 </div>
               </div>
               <div class="options">
                 <div class="toggle-btn">
-                  <svg
+                  <svg>
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -279,7 +279,7 @@ const renderTasks = () => {
       });
       div.innerHTML = `
       <div class="delete">
-                <svg
+                <svg>
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -297,7 +297,7 @@ const renderTasks = () => {
               `;
       label.innerHTML = `
               <span class="checkmark">
-                <svg
+                <svg>
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -323,10 +323,10 @@ const renderTasks = () => {
         tasks.splice(index, 1);
         saveLocal();
         renderTasks();
+        renderCategories();
+        updateTotals();
       });
     });
-    renderCategories();
-    updateTotals();
   }
 };
 const toggleAddTaskForm = () => {
@@ -352,6 +352,8 @@ const addTask = (e) => {
     saveLocal();
     toggleAddTaskForm();
     renderTasks();
+    renderCategories();
+    updateTotals();
   }
 };
 // Initialize variables and DOM elements
@@ -382,6 +384,7 @@ cancelBtn.addEventListener("click", toggleAddTaskForm);
 // Render initial state
 getLocal();
 renderTasks();
+renderCategories();
 categories.forEach((category) => {
   const option = document.createElement("option");
   option.value = category.title.toLowerCase();
