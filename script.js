@@ -32,7 +32,6 @@ let categories = [
     img: "saving.png",
   },
 ];
-
 let tasks = [
   {
     id: 1,
@@ -187,23 +186,19 @@ let tasks = [
   },
   // Add more tasks for each category as desired
 ];
-
 // Define functions
 const saveLocal = () => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
-
 const getLocal = () => {
   const tasksLocal = JSON.parse(localStorage.getItem("tasks"));
   if (tasksLocal) {
     tasks = tasksLocal;
   }
 };
-
 const toggleScreen = () => {
   screenWrapper.classList.toggle("show-category");
 };
-
 const updateTotals = () => {
   const categoryTasks = tasks.filter(
     (task) =>
@@ -212,7 +207,6 @@ const updateTotals = () => {
   numTasks.innerHTML = `${categoryTasks.length} Tasks`;
   totalTasks.innerHTML = tasks.length;
 };
-
 const renderCategories = () => {
   categoriesContainer.innerHTML = "";
   categories.forEach((category) => {
@@ -226,15 +220,12 @@ const renderCategories = () => {
       selectedCategory = category;
       updateTotals();
       categoryTitle.innerHTML = category.title;
-      categoryImg.src = `images/${category.img}`;
+      categoryImg.src = `${category.img}`;
       renderTasks();
     });
-
     div.innerHTML = `
                   <div class="left">
-                <img src="images/${category.img}"
-                 alt="${category.title}"
-                  />
+                <img src="${category.img}" alt="${category.title}" />
                 <div class="content">
                   <h1>${category.title}</h1>
                   <p>${categoryTasks.length} Tasks</p>
@@ -259,11 +250,9 @@ const renderCategories = () => {
                 </div>
               </div>
     `;
-
     categoriesContainer.appendChild(div);
   });
 };
-
 const renderTasks = () => {
   tasksContainer.innerHTML = "";
   const categoryTasks = tasks.filter(
@@ -307,8 +296,8 @@ const renderTasks = () => {
               </div>
               `;
       label.innerHTML = `
-              <span class="checkmark"
-                ><svg
+              <span class="checkmark">
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -323,12 +312,11 @@ const renderTasks = () => {
                   />
                 </svg>
               </span>
-              <p>${task.task}</p>
+              ${task.task}
         `;
       label.prepend(checkbox);
       div.prepend(label);
       tasksContainer.appendChild(div);
-
       const deleteBtn = div.querySelector(".delete");
       deleteBtn.addEventListener("click", () => {
         const index = tasks.findIndex((t) => t.id === task.id);
@@ -337,23 +325,19 @@ const renderTasks = () => {
         renderTasks();
       });
     });
-
     renderCategories();
     updateTotals();
   }
 };
-
 const toggleAddTaskForm = () => {
   addTaskWrapper.classList.toggle("active");
   blackBackdrop.classList.toggle("active");
   addTaskBtn.classList.toggle("active");
 };
-
 const addTask = (e) => {
   e.preventDefault();
   const task = taskInput.value;
   const category = categorySelect.value;
-
   if (task === "") {
     alert("Please enter a task");
   } else {
@@ -370,7 +354,6 @@ const addTask = (e) => {
     renderTasks();
   }
 };
-
 // Initialize variables and DOM elements
 let selectedCategory = categories[0];
 const categoriesContainer = document.querySelector(".categories");
@@ -389,7 +372,6 @@ const blackBackdrop = document.querySelector(".black-backdrop");
 const addBtn = document.querySelector(".add-btn");
 const cancelBtn = document.querySelector(".cancel-btn");
 const totalTasks = document.getElementById("total-tasks");
-
 // Attach event listeners
 menuBtn.addEventListener("click", toggleScreen);
 backBtn.addEventListener("click", toggleScreen);
@@ -397,7 +379,6 @@ addTaskBtn.addEventListener("click", toggleAddTaskForm);
 blackBackdrop.addEventListener("click", toggleAddTaskForm);
 addBtn.addEventListener("click", addTask);
 cancelBtn.addEventListener("click", toggleAddTaskForm);
-
 // Render initial state
 getLocal();
 renderTasks();
