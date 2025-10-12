@@ -32,6 +32,7 @@ let categories = [
     img: "saving.png",
   },
 ];
+
 let tasks = [
   {
     id: 1,
@@ -129,7 +130,6 @@ let tasks = [
     category: "Finance",
     completed: false,
   },
-  // Additional tasks for each category
   {
     id: 17,
     task: "Buy new clothes",
@@ -184,32 +184,33 @@ let tasks = [
     category: "Finance",
     completed: false,
   },
-  // Add more tasks for each category as desired
 ];
 
-// Define functions
 const saveLocal = () => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
+
 const getLocal = () => {
   const tasksLocal = JSON.parse(localStorage.getItem("tasks"));
   if (tasksLocal) {
     tasks = tasksLocal;
   }
 };
+
 const toggleScreen = () => {
   screenWrapper.classList.toggle("show-category");
 };
+
 const updateTotals = () => {
   const categoryTasks = tasks.filter(
     (task) =>
       selectedCategory &&
       task.category.toLowerCase() === selectedCategory.title.toLowerCase()
   );
-  // Ensure safety if selectedCategory is not yet set
   numTasks.innerHTML = `${categoryTasks.length} Tasks`;
   totalTasks.innerHTML = tasks.length;
 };
+
 const renderCategories = () => {
   categoriesContainer.innerHTML = "";
   categories.forEach((category) => {
@@ -226,40 +227,14 @@ const renderCategories = () => {
       categoryImg.src = `${category.img}`;
       renderTasks();
     });
-    div.innerHTML = `
-                  <div class="left">
-                <img alt="${category.title}"/>
-                <div class="content">
-                  ${category.title}
-                  ${categoryTasks.length} Tasks
-                </div>
-              </div>
-              <div class="options">
-                <div class="toggle-btn">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                    />
-                  </svg>
-                </div>
-              </div>
-    `;
+    div.innerHTML = `<div class="left"><img src="${category.img}" alt="${category.title}" /><div class="content"><h1>${category.title}</h1><p>${categoryTasks.length} Tasks</p></div></div><div class="options"><div class="toggle-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg></div></div>`;
     categoriesContainer.appendChild(div);
   });
 };
+
 const renderTasks = () => {
   tasksContainer.innerHTML = "";
   if (!selectedCategory) {
-    // If no category selected yet, default to first
     selectedCategory = categories[0];
   }
   const categoryTasks = tasks.filter(
@@ -283,50 +258,15 @@ const renderTasks = () => {
         const index = tasks.findIndex((t) => t.id === task.id);
         tasks[index].completed = !tasks[index].completed;
         saveLocal();
-        // Keep UI consistent after toggle
         updateTotals();
         renderCategories();
       });
-      div.innerHTML = `
-      <div class="delete">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                  />
-                </svg>
-              </div>
-              `;
-      label.innerHTML = `
-              <span class="checkmark">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M4.5 12.75l6 6 9-13.5"
-                  />
-                </svg>
-              </span>
-              ${task.task}
-        `;
+      label.innerHTML = `<span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span><p>${task.task}</p>`;
       label.prepend(checkbox);
+      div.innerHTML = `<div class="delete"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg></div>`;
       div.prepend(label);
       tasksContainer.appendChild(div);
+
       const deleteBtn = div.querySelector(".delete");
       deleteBtn.addEventListener("click", () => {
         const index = tasks.findIndex((t) => t.id === task.id);
@@ -339,41 +279,42 @@ const renderTasks = () => {
     });
   }
 };
+
 const toggleAddTaskForm = () => {
   addTaskWrapper.classList.toggle("active");
   blackBackdrop.classList.toggle("active");
   addTaskBtn.classList.toggle("active");
 };
+
 const addTask = (e) => {
   e.preventDefault();
   const task = taskInput.value.trim();
   const category = categorySelect.value;
+
   if (task === "") {
     alert("Please enter a task");
   } else {
     const newTask = {
-      id: tasks.length ? Math.max(...tasks.map((t) => t.id)) + 1 : 1, // ensure unique id
+      id: tasks.length > 0 ? Math.max(...tasks.map((t) => t.id)) + 1 : 1,
       task,
       category,
       completed: false,
     };
     tasks.push(newTask);
     saveLocal();
-
-    // UI updates: re-render lists and totals
     renderTasks();
     renderCategories();
     updateTotals();
-
-    // Clear inputs and close form
     taskInput.value = "";
     categorySelect.selectedIndex = 0;
+
     if (addTaskWrapper.classList.contains("active")) {
       toggleAddTaskForm();
     }
   }
 };
-// Initialize variables and DOM elements
+
+// DOM Elements and Initial State
 let selectedCategory = categories[0];
 const categoriesContainer = document.querySelector(".categories");
 const screenWrapper = document.querySelector(".wrapper");
@@ -391,40 +332,31 @@ const blackBackdrop = document.querySelector(".black-backdrop");
 const addBtn = document.querySelector(".add-btn");
 const cancelBtn = document.querySelector(".cancel-btn");
 const totalTasks = document.getElementById("total-tasks");
-// Attach event listeners
+
+// Event Listeners
 menuBtn.addEventListener("click", toggleScreen);
 backBtn.addEventListener("click", toggleScreen);
 addTaskBtn.addEventListener("click", toggleAddTaskForm);
 blackBackdrop.addEventListener("click", toggleAddTaskForm);
 addBtn.addEventListener("click", addTask);
 cancelBtn.addEventListener("click", toggleAddTaskForm);
-// Render initial state
-getLocal();
-renderTasks();
-renderCategories();
-updateTotals();
 
-// Ensure categorySelect is populated and not skipped
-categorySelect.innerHTML = ""; // reset to avoid duplicates on hot reload
+// Initial Setup
+getLocal();
+
+categorySelect.innerHTML = "";
 categories.forEach((category) => {
   const option = document.createElement("option");
-  option.value = category.title; // use consistent case for value
+  option.value = category.title;
   option.textContent = category.title;
   categorySelect.appendChild(option);
 });
 
-// If a category was previously selected, keep UI in sync
 if (selectedCategory) {
   categoryTitle.innerHTML = selectedCategory.title;
   categoryImg.src = `${selectedCategory.img}`;
 }
 
-/*
-Fixes applied:
-1) Task count updates correctly after add/delete via updateTotals() calls after mutations.
-2) renderTasks() and renderCategories() are called after every change (add, delete, toggle complete).
-3) UI input fields are cleared and the add form closes after add; categorySelect reset to first option.
-4) Category render is not skipped: renderCategories() invoked on init and after mutations; categorySelect populated safely without duplicates.
-5) Unique ID generation fixed to avoid duplicates after deletions.
-6) Defensive checks for selectedCategory and added initial updateTotals() call on init.
-*/
+renderTasks();
+renderCategories();
+updateTotals();
