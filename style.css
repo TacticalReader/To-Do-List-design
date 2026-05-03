@@ -383,3 +383,55 @@ button.add-btn {
     opacity: 1;
     visibility: visible;
 }
+
+/* FontAwesome Icons Styling */
+.icon-header {
+    color: #ffdd57;
+    margin-right: 8px;
+}
+.icon-stats {
+    color: #4caf50;
+    margin-right: 5px;
+}
+.icon-category {
+    color: #ff9800;
+    margin-right: 8px;
+}
+.icon-heading {
+    color: #39a6f0;
+    margin-right: 8px;
+}
+.icon-label {
+    color: #9c27b0;
+    margin-right: 5px;
+}
+.icon-btn {
+    margin-right: 5px;
+}
+.cancel-btn .icon-btn {
+    color: #f44336;
+}
+.add-btn .icon-btn {
+    color: #fff;
+}
+.icon-cat-title {
+    color: #e91e63;
+    margin-right: 5px;
+    font-size: 1.2rem;
+}
+.icon-cat-tasks {
+    color: #00bcd4;
+    margin-right: 5px;
+}
+.icon-task {
+    color: #ff5722;
+    margin-right: 8px;
+    font-size: 0.9rem;
+}
+.icon-empty {
+    color: #9e9e9e;
+    margin-right: 10px;
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+}
