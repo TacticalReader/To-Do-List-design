@@ -77,7 +77,7 @@ const renderCategories = () => {
       screenWrapper.classList.toggle("show-category");
       selectedCategory = category;
       updateTotals();
-      categoryTitle.innerHTML = category.title;
+      categoryTitle.innerHTML = `<i class="fas fa-folder-open icon-category"></i> ${category.title}`;
       categoryImg.src = `${category.img}`;
       renderTasks();
     });
@@ -86,8 +86,8 @@ const renderCategories = () => {
       <div class="left">
         <img src="${category.img}" alt="${category.title}" />
         <div class="content">
-          <h1>${category.title}</h1>
-          <p>${categoryTasks.length} Tasks</p>
+          <h1><i class="fas fa-bookmark icon-cat-title"></i> ${category.title}</h1>
+          <p><i class="fas fa-tasks icon-cat-tasks"></i> ${categoryTasks.length} Tasks</p>
         </div>
       </div>
       <div class="options">
@@ -119,7 +119,7 @@ const renderTasks = () => {
       task.category.toLowerCase() === selectedCategory.title.toLowerCase()
   );
   if (categoryTasks.length === 0) {
-    tasksContainer.innerHTML = `<p class="no-tasks">No tasks added for this category</p>`;
+    tasksContainer.innerHTML = `<p class="no-tasks"><i class="fas fa-box-open icon-empty"></i> No tasks added for this category</p>`;
   } else {
     categoryTasks.forEach((task) => {
       const div = document.createElement("div");
@@ -147,7 +147,7 @@ const renderTasks = () => {
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
           </svg>
         </span>
-        <p>${task.task}</p>`;
+        <p><i class="fas fa-thumbtack icon-task"></i> ${task.task}</p>`;
       label.prepend(checkbox);
 
       div.innerHTML = `
@@ -246,7 +246,7 @@ categories.forEach((category) => {
 });
 
 if (selectedCategory) {
-  categoryTitle.innerHTML = selectedCategory.title;
+  categoryTitle.innerHTML = `<i class="fas fa-folder-open icon-category"></i> ${selectedCategory.title}`;
   categoryImg.src = `${selectedCategory.img}`;
 }
 
