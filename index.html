@@ -10,6 +10,7 @@
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
     <meta name="msapplication-TileColor" content="#2d89ef" />
     <meta name="theme-color" content="#ffffff" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="style.css" />
     <title>Javascript Todo-list App</title>
     <meta name="description" content="Manage your tasks effortlessly with our JavaScript Todos List App. Organize, prioritize, and track your to-dos seamlessly using this user-friendly web application." />
@@ -27,9 +28,9 @@
           </div>
           <div class="welcome">
             <div class="content">
-              <h1>Hello Tanmay</h1>
+              <h1><i class="fas fa-user-circle icon-header"></i> Hello Tanmay</h1>
               <!-- FIX #7: Changed hardcoded "5" to "0" to prevent wrong count flashing before JS loads -->
-              <p>Today you have <span id="total-tasks">0</span> tasks</p>
+              <p><i class="fas fa-chart-line icon-stats"></i> Today you have <span id="total-tasks">0</span> tasks</p>
             </div>
             <div class="img">
               <div class="backdrop"></div>
@@ -58,7 +59,7 @@
           <img src="boy.png" alt="" id="category-img" />
           <div class="details">
             <p id="num-tasks">8 tasks</p>
-            <h1 id="category-title">Personal</h1>
+            <h1 id="category-title"><i class="fas fa-folder-open icon-category"></i> Personal</h1>
           </div>
         </div>
         <div class="tasks-wrapper">
@@ -73,18 +74,18 @@
       <div class="black-backdrop"></div>
       <div class="add-task">
         <div class="add-task-backdrop"></div>
-        <h1 class="heading">Add Task</h1>
+        <h1 class="heading"><i class="fas fa-plus-circle icon-heading"></i> Add Task</h1>
         <div class="input-group">
-          <label for="task-input"> Task </label>
+          <label for="task-input"><i class="fas fa-pencil-alt icon-label"></i> Task </label>
           <input id="task-input" type="text" required />
         </div>
         <div class="input-group">
-          <label for="category-select"> Category </label>
+          <label for="category-select"><i class="fas fa-tags icon-label"></i> Category </label>
           <select id="category-select"></select>
         </div>
         <div class="btns">
-          <button class="cancel-btn">Cancel</button>
-          <button class="add-btn">Add</button>
+          <button class="cancel-btn"><i class="fas fa-times icon-btn"></i> Cancel</button>
+          <button class="add-btn"><i class="fas fa-check icon-btn"></i> Add</button>
         </div>
       </div>
     </div>
