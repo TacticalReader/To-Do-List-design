@@ -199,6 +199,7 @@ const addTask = () => {
     updateTotals();
     taskInput.value = "";
     categorySelect.selectedIndex = 0;
+    categorySelect.dispatchEvent(new Event('change'));
 
     if (addTaskWrapper.classList.contains("active")) {
       toggleAddTaskForm();
@@ -237,13 +238,39 @@ cancelBtn.addEventListener("click", toggleAddTaskForm);
 // Initial Setup
 getLocal();
 
+const categoryIcons = {
+  "Personal": { icon: "\uf007", color: "#ff9800" },
+  "Work": { icon: "\uf0b1", color: "#795548" },
+  "Shopping": { icon: "\uf290", color: "#e91e63" },
+  "Coding": { icon: "\uf121", color: "#2196f3" },
+  "Health": { icon: "\uf477", color: "#4caf50" },
+  "Fitness": { icon: "\uf44b", color: "#ff5722" },
+  "Education": { icon: "\uf19d", color: "#9c27b0" },
+  "Finance": { icon: "\uf155", color: "#8bc34a" }
+};
+
 categorySelect.innerHTML = "";
 categories.forEach((category) => {
   const option = document.createElement("option");
   option.value = category.title;
-  option.textContent = category.title;
+  const catData = categoryIcons[category.title];
+  if (catData) {
+    option.textContent = `${catData.icon} ${category.title}`;
+    option.style.color = catData.color;
+  } else {
+    option.textContent = category.title;
+  }
   categorySelect.appendChild(option);
 });
+
+categorySelect.addEventListener('change', (e) => {
+  const selectedOption = e.target.options[e.target.selectedIndex];
+  e.target.style.color = selectedOption.style.color;
+});
+
+if (categorySelect.options.length > 0) {
+  categorySelect.style.color = categorySelect.options[categorySelect.selectedIndex].style.color;
+}
 
 if (selectedCategory) {
   categoryTitle.innerHTML = `<i class="fas fa-folder-open icon-category"></i> ${selectedCategory.title}`;
