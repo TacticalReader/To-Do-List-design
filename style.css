@@ -56,7 +56,7 @@ body {
     transform: translateX(-100%);
 }
 .wrapper.show-category .screen-backdrop {
-    transform: translate(-50%, -60%)
+    transform: translate(-50%, -60%);
 }
 .head-wrapper {
     padding: 0 30px;
@@ -179,7 +179,7 @@ body {
 .category-details .details p {
     opacity: 0.6;
 }
-/* tasks */
+/* Tasks */
 .tasks-wrapper {
     padding: 0 30px;
     margin-top: 1rem;
@@ -349,6 +349,7 @@ body {
     font-size: 14px;
     font-weight: 600;
     transition: all 0.3s;
+    position: relative; /* FIX #2: enables z-index to work */
     z-index: 1;
 }
 button.add-btn {
@@ -364,6 +365,7 @@ button.add-btn {
     height: 20rem;
     border-radius: 50% 50% 0 0;
     background-color: #fff;
+    z-index: -1; /* FIX #1: push backdrop behind form inputs so they are clickable */
 }
 .black-backdrop {
     position: absolute;
